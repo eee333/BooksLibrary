@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+
+from service.models import Author, Book, Customer
+
+admin.site.register(Author)
+admin.site.register(Book)
+admin.site.register(Customer)
+
