@@ -6,8 +6,8 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView,
 from rest_framework.viewsets import ModelViewSet
 from django.views import View
 
-from service.models import Author, Book
-from service.serializers import AuthorSerializer, BookSerializer
+from service.models import Author, Book, Customer
+from service.serializers import AuthorSerializer, BookSerializer, CustomerSerializer
 
 
 class AuthorListView(ListAPIView):
@@ -40,3 +40,8 @@ class AuthorCreateView(CreateAPIView):
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+class CustomerViewSet(ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer

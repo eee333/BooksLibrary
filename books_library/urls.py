@@ -20,10 +20,11 @@ from django.urls import path, include
 from rest_framework import routers
 
 from service.views import AuthorListView, AuthorDetailView, AuthorUpdateView, AuthorDeleteView, AuthorCreateView, \
-    BookViewSet
+    BookViewSet, CustomerViewSet
 
 router = routers.SimpleRouter()
 router.register('book', BookViewSet)
+router.register('customer', CustomerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
