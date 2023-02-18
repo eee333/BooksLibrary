@@ -18,7 +18,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
-    description = models.CharField(max_length=200, verbose_name='Описание')
+    description = models.TextField(max_length=2000, verbose_name='Описание')
     pages_count = models.PositiveIntegerField(verbose_name='Количество страниц')
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     books_count = models.PositiveIntegerField(verbose_name='Количество книг в библиотеке')
