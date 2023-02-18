@@ -3,10 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, CreateAPIView
+from rest_framework.viewsets import ModelViewSet
 from django.views import View
 
-from service.models import Author
-from service.serializers import AuthorSerializer
+from service.models import Author, Book
+from service.serializers import AuthorSerializer, BookSerializer
 
 
 class AuthorListView(ListAPIView):
@@ -34,3 +35,8 @@ class AuthorDeleteView(DestroyAPIView):
 class AuthorCreateView(CreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+
+class BookViewSet(ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer

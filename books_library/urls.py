@@ -19,7 +19,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from service.views import AuthorListView, AuthorDetailView, AuthorUpdateView, AuthorDeleteView, AuthorCreateView
+from service.views import AuthorListView, AuthorDetailView, AuthorUpdateView, AuthorDeleteView, AuthorCreateView, \
+    BookViewSet
+
+router = routers.SimpleRouter()
+router.register('book', BookViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,3 +34,5 @@ urlpatterns = [
     path('author/delete/<int:pk>', AuthorDeleteView.as_view()),
     path('author/create/', AuthorCreateView.as_view()),
 ]
+
+urlpatterns += router.urls
