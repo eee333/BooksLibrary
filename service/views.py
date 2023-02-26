@@ -7,30 +7,11 @@ from rest_framework.viewsets import ModelViewSet
 from django.views import View
 
 from service.models import Author, Book, Customer
-from service.serializers import AuthorSerializer, BookSerializer, CustomerSerializer, BookListDetailSerializer
+from service.serializers import AuthorSerializer, BookSerializer, CustomerSerializer, BookListDetailSerializer, \
+    CustomerListDetailSerializer
 
 
-class AuthorListView(ListAPIView):
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
-
-
-class AuthorDetailView(RetrieveAPIView):
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
-
-
-class AuthorUpdateView(UpdateAPIView):
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
-
-
-class AuthorDeleteView(DestroyAPIView):
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
-
-
-class AuthorCreateView(CreateAPIView):
+class AuthorViewSet(ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
@@ -60,11 +41,26 @@ class BookCreateView(CreateAPIView):
     serializer_class = BookSerializer
 
 
-# class BookViewSet(ModelViewSet):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
+class CustomerListView(ListAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerListDetailSerializer
 
 
-class CustomerViewSet(ModelViewSet):
+class CustomerDetailView(RetrieveAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerListDetailSerializer
+
+
+class CustomerUpdateView(UpdateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class CustomerDeleteView(DestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class CustomerCreateView(CreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer

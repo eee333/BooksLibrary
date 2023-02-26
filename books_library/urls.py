@@ -19,25 +19,25 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from service.views import AuthorListView, AuthorDetailView, AuthorUpdateView, AuthorDeleteView, AuthorCreateView, \
-     CustomerViewSet, BookListView, BookDetailView, BookUpdateView, BookDeleteView, BookCreateView
+from service.views import BookListView, BookDetailView, BookUpdateView, BookDeleteView, BookCreateView, AuthorViewSet, \
+    CustomerCreateView, CustomerDeleteView, CustomerUpdateView, CustomerDetailView, CustomerListView
 
 router = routers.SimpleRouter()
-router.register('customer', CustomerViewSet)
+router.register('author', AuthorViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('author/', AuthorListView.as_view()),
-    path('author/<int:pk>/', AuthorDetailView.as_view()),
-    path('author/update/<int:pk>/', AuthorUpdateView.as_view()),
-    path('author/delete/<int:pk>/', AuthorDeleteView.as_view()),
-    path('author/create/', AuthorCreateView.as_view()),
     path('book/', BookListView.as_view()),
     path('book/<int:pk>/', BookDetailView.as_view()),
     path('book/update/<int:pk>/', BookUpdateView.as_view()),
     path('book/delete/<int:pk>/', BookDeleteView.as_view()),
     path('book/create/', BookCreateView.as_view()),
+    path('customer/', CustomerListView.as_view()),
+    path('customer/<int:pk>/', CustomerDetailView.as_view()),
+    path('customer/update/<int:pk>/', CustomerUpdateView.as_view()),
+    path('customer/delete/<int:pk>/', CustomerDeleteView.as_view()),
+    path('customer/create/', CustomerCreateView.as_view()),
 ]
 
 urlpatterns += router.urls

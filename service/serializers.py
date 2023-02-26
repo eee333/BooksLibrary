@@ -29,4 +29,12 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
+        exclude = ['created_at', 'updated_at']
+
+
+class CustomerListDetailSerializer(serializers.ModelSerializer):
+    active_books = serializers.SlugRelatedField(slug_field='full_name', read_only=True, many=True)
+
+    class Meta:
+        model = Customer
         fields = '__all__'

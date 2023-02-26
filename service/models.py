@@ -29,6 +29,10 @@ class Book(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
+    @property
+    def full_name(self):
+        return f'{self.name} ({self.author.full_name})'
+
     def __str__(self):
         return self.name
 
