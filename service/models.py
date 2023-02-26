@@ -36,7 +36,7 @@ class Book(models.Model):
 class Customer(models.Model):
     first_name = models.CharField(max_length=20, verbose_name='Имя')
     last_name = models.CharField(max_length=20, verbose_name='Фамилия')
-    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    phone = models.CharField(max_length=16, unique=True, verbose_name='Телефон')
     active = models.BooleanField(default=True)
     active_books = models.ManyToManyField(Book, blank=True, null=True, verbose_name='Активные книги')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
