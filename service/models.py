@@ -8,8 +8,12 @@ class Author(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def __str__(self):
-        return str(self.first_name) + ' ' + str(self.last_name)
+        return f'{self.first_name} {self.last_name}'
 
     class Meta:
         verbose_name = 'Автор'
@@ -42,8 +46,12 @@ class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def __str__(self):
-        return str(self.first_name) + ' ' + str(self.last_name)
+        return f'{self.first_name} {self.last_name}'
 
     class Meta:
         verbose_name = 'Читатель'

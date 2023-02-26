@@ -14,6 +14,14 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
+        exclude = ['created_at', 'updated_at']
+
+
+class BookListDetailSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(slug_field='full_name', read_only=True)
+
+    class Meta:
+        model = Book
         fields = '__all__'
 
 
