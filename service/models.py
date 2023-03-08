@@ -24,7 +24,7 @@ class Book(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
     description = models.TextField(max_length=2000, verbose_name='Описание')
     pages_count = models.PositiveIntegerField(verbose_name='Количество страниц')
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')
     books_count = models.PositiveIntegerField(verbose_name='Количество книг в библиотеке')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
@@ -45,7 +45,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=20, verbose_name='Имя')
     last_name = models.CharField(max_length=20, verbose_name='Фамилия')
     phone = models.CharField(max_length=16, unique=True, verbose_name='Телефон')
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True, verbose_name='Активен')
     active_books = models.ManyToManyField(Book, blank=True, null=True, verbose_name='Активные книги')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
@@ -53,6 +53,11 @@ class Customer(models.Model):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def list_active_books(self):
+        return ', '.join([book.name for book in self.active_books.all()])
+
+    list_active_books.short_description = 'Активные книги'
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
