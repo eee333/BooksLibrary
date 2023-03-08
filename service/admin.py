@@ -15,6 +15,17 @@ class BookAdmin(admin.ModelAdmin):
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', 'active', 'list_active_books', 'created_at')
     list_filter = ('active',)
+    actions = ['deactivate', 'activate']
+
+    @admin.action(description='Деактивировать читателей')
+    def deactivate(self, request, queryset):
+        count = queryset.update(active=False)
+        self.message_user(request, f'Изменен статус {count} читателей.')
+
+    @admin.action(description='Активировать читателей')
+    def activate(self, request, queryset):
+        count = queryset.update(active=True)
+        self.message_user(request, f'Изменен статус {count} читателей.')
 
 
 admin.site.register(Author, AuthorAdmin)
