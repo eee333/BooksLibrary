@@ -14,6 +14,7 @@ class BookAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', 'active', 'list_active_books', 'created_at')
+    list_filter = ('active',)
 
 
 admin.site.register(Author, AuthorAdmin)
