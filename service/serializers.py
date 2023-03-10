@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from service.models import Author, Book, Customer
+
+
+class PhoneValidator:
+    def __call__(self, value):
+        if value < 70000000000 or value > 79999999999:
+            raise  serializers.ValidationError('Номер телефона должен содеожать 11 цифр и начинаться с 7')
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -27,6 +32,7 @@ class BookListDetailSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    phone = serializers.IntegerField(validators=[PhoneValidator()])
 
     class Meta:
         model = Customer
@@ -40,7 +46,7 @@ class CustomerSerializer(serializers.ModelSerializer):
                         book.books_count -= 1
                         book.save()
                     else:
-                        raise ValidationError(f'Книги ({book.name}) нет в наличие.')
+                        raise serializers.ValidationError(f'Книги ({book.name}) нет в наличие.')
             for book in instance.active_books.all():
                 if book not in validated_data['active_books']:
                     book.books_count += 1
