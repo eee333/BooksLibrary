@@ -9,6 +9,12 @@ class PhoneValidator:
             raise  serializers.ValidationError('Номер телефона должен содеожать 11 цифр и начинаться с 7')
 
 
+class PageCountValidator:
+    def __call__(self, value):
+        if value <= 0:
+            raise serializers.ValidationError('Количество страниц не может быть меньше 1')
+
+
 class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -17,6 +23,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+    pages_count = serializers.IntegerField(validators=[PageCountValidator()])
 
     class Meta:
         model = Book
