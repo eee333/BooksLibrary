@@ -45,7 +45,7 @@ class CustomerAdmin(admin.ModelAdmin):
     def del_books(self, request, queryset):
         count = 0
         for obj in queryset:
-            for book in obj.active_books.all():
+            for book in obj.active_books.all():  # Увеличиваем наличие книг в библиотеке
                 book.books_count += 1
                 book.save()
             obj.active_books.clear()
