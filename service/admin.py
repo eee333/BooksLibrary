@@ -11,6 +11,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ('name', 'author_link', 'pages_count', 'books_count', 'created_at')
+    actions = ['set_zero',]
 
     def author_link(self, obj):
         author = obj.author
@@ -18,6 +19,11 @@ class BookAdmin(admin.ModelAdmin):
         return format_html(f'<a href="{url}">{author}</a>')
 
     author_link.short_description = 'Автор'
+
+    @admin.action(description='Установить наличие в 0')
+    def set_zero(self, request, queryset):
+        count = queryset.update(books_count=0)
+        self.message_user(request, f'Изменено наличие {count} книг.')
 
 
 class CustomerAdmin(admin.ModelAdmin):
