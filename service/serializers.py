@@ -50,13 +50,17 @@ class CustomerSerializer(serializers.ModelSerializer):
             if len(validated_data['active_books']) <= 3:  # пользователь может брать не больше трех книг
 
                 # Уменьшаем количество книг в библиотеке
+                book_list = []
                 for book in validated_data['active_books']:
                     if book not in instance.active_books.all():
                         if book.books_count > 0:
-                            book.books_count -= 1
-                            book.save()
+                            book_list.append(book)
                         else:
                             raise serializers.ValidationError(f'Книги ({book.name}) нет в наличие.')
+                for book in book_list:  # Сохраняем количество книг, только если каждая из них есть в наличие
+                    book.books_count -= 1
+                    book.save()
+
                 # Увеличиваем количество книг в библиотеке
                 for book in instance.active_books.all():
                     if book not in validated_data['active_books']:
@@ -72,12 +76,16 @@ class CustomerSerializer(serializers.ModelSerializer):
             if len(validated_data['active_books']) <= 3:  # пользователь может брать не больше трех книг
 
                 # Уменьшаем количество книг в библиотеке
+                book_list = []
                 for book in validated_data['active_books']:
                     if book.books_count > 0:
-                        book.books_count -= 1
-                        book.save()
+                        book_list.append(book)
                     else:
                         raise serializers.ValidationError(f'Книги ({book.name}) нет в наличие.')
+
+                for book in book_list:  # Сохраняем количество книг, только если каждая из них есть в наличие
+                    book.books_count -= 1
+                    book.save()
 
             else:
                 raise serializers.ValidationError('Читатель не может взять больше 3 книг')
