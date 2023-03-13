@@ -67,6 +67,23 @@ class CustomerSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)
 
+    def create(self, validated_data):
+        if 'active_books' in validated_data:
+            if len(validated_data['active_books']) <= 3:  # пользователь может брать не больше трех книг
+
+                # Уменьшаем количество книг в библиотеке
+                for book in validated_data['active_books']:
+                    if book.books_count > 0:
+                        book.books_count -= 1
+                        book.save()
+                    else:
+                        raise serializers.ValidationError(f'Книги ({book.name}) нет в наличие.')
+
+            else:
+                raise serializers.ValidationError('Читатель не может взять больше 3 книг')
+
+        return super().create(validated_data)
+
 
 class CustomerListDetailSerializer(serializers.ModelSerializer):
     active_books = serializers.SlugRelatedField(slug_field='full_name', read_only=True, many=True)
