@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.views import View
 
 from service.models import Author, Book, Customer
-from service.permissions import PermissionPolicyMixin
+from service.permissions import PermissionPolicyMixin, IsAdminOrOwner
 from service.serializers import AuthorSerializer, BookSerializer, CustomerSerializer, BookListDetailSerializer, \
     CustomerListDetailSerializer
 
@@ -54,21 +54,25 @@ class BookCreateView(CreateAPIView):
 class CustomerListView(ListAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerListDetailSerializer
+    permission_classes = [IsAdminUser]
 
 
 class CustomerDetailView(RetrieveAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerListDetailSerializer
+    permission_classes = [IsAdminOrOwner]
 
 
 class CustomerUpdateView(UpdateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAdminOrOwner]
 
 
 class CustomerDeleteView(DestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [IsAdminOrOwner]
 
 
 class CustomerCreateView(CreateAPIView):
