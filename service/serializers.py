@@ -69,6 +69,13 @@ class CustomerSerializer(serializers.ModelSerializer):
             else:
                 raise serializers.ValidationError('Читатель не может взять больше 3 книг')
 
+        if 'password' in validated_data:
+            customer = super().update(instance, validated_data)
+            customer.set_password(customer.password)
+            customer.save()
+
+            return customer
+
         return super().update(instance, validated_data)
 
     def create(self, validated_data):
@@ -90,7 +97,11 @@ class CustomerSerializer(serializers.ModelSerializer):
             else:
                 raise serializers.ValidationError('Читатель не может взять больше 3 книг')
 
-        return super().create(validated_data)
+        customer = super().create(validated_data)
+        customer.set_password(customer.password)
+        customer.save()
+
+        return customer
 
 
 class CustomerListDetailSerializer(serializers.ModelSerializer):

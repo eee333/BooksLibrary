@@ -27,7 +27,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'phone', 'is_active', 'list_active_books', 'date_joined')
+    list_display = ('username', 'full_name', 'phone', 'is_active', 'list_active_books', 'date_joined')
     list_filter = ('is_active',)
     actions = ['deactivate', 'activate', 'del_books']
 
