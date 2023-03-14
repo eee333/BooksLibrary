@@ -43,7 +43,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        exclude = ['created_at', 'updated_at']
+        exclude = ['date_joined', 'updated_at']
 
     def update(self, instance, validated_data):
         if 'active_books' in validated_data:
