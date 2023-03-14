@@ -8,13 +8,19 @@ from rest_framework.viewsets import ModelViewSet
 from django.views import View
 
 from service.models import Author, Book, Customer
+from service.permissions import PermissionPolicyMixin
 from service.serializers import AuthorSerializer, BookSerializer, CustomerSerializer, BookListDetailSerializer, \
     CustomerListDetailSerializer
 
 
-class AuthorViewSet(ModelViewSet):
+class AuthorViewSet(PermissionPolicyMixin, ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes_per_method = {
+        'create': [IsAdminUser],
+        'update': [IsAdminUser],
+        'destroy': [IsAdminUser]
+    }
 
 
 class BookListView(ListAPIView):
