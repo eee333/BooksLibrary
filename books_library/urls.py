@@ -22,6 +22,9 @@ from rest_framework import routers
 from service.views import BookListView, BookDetailView, BookUpdateView, BookDeleteView, BookCreateView, AuthorViewSet, \
     CustomerCreateView, CustomerDeleteView, CustomerUpdateView, CustomerDetailView, CustomerListView
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 router = routers.SimpleRouter()
 router.register('author', AuthorViewSet)
 
@@ -38,6 +41,8 @@ urlpatterns = [
     path('customer/update/<int:pk>/', CustomerUpdateView.as_view()),
     path('customer/delete/<int:pk>/', CustomerDeleteView.as_view()),
     path('customer/create/', CustomerCreateView.as_view()),
+    path('login/', TokenObtainPairView.as_view()),
+    path('refresh/', TokenRefreshView.as_view()),
 ]
 
 urlpatterns += router.urls

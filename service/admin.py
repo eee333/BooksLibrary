@@ -27,18 +27,18 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'phone', 'active', 'list_active_books', 'created_at')
-    list_filter = ('active',)
+    list_display = ('username', 'full_name', 'phone', 'is_active', 'list_active_books', 'date_joined')
+    list_filter = ('is_active',)
     actions = ['deactivate', 'activate', 'del_books']
 
     @admin.action(description='Деактивировать читателей')
     def deactivate(self, request, queryset):
-        count = queryset.update(active=False)
+        count = queryset.update(is_active=False)
         self.message_user(request, f'Изменен статус {count} читателей.')
 
     @admin.action(description='Активировать читателей')
     def activate(self, request, queryset):
-        count = queryset.update(active=True)
+        count = queryset.update(is_active=True)
         self.message_user(request, f'Изменен статус {count} читателей.')
 
     @admin.action(description='Удалить все книги')
